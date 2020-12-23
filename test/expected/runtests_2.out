@@ -1,7 +1,7 @@
 \unset ECHO
 ok 1 - starting up
 ok 2 - starting up some more
-    # Subtest: whatever."test ident"()
+# Subtest: whatever."test ident"()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -11,7 +11,7 @@ ok 2 - starting up some more
     ok 7 - teardown more
     1..7
 ok 3 - whatever."test ident"
-    # Subtest: whatever.testplpgsql()
+# Subtest: whatever.testplpgsql()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -22,7 +22,7 @@ ok 3 - whatever."test ident"
     ok 8 - teardown more
     1..8
 ok 4 - whatever.testplpgsql
-    # Subtest: whatever.testplpgsqldie()
+# Subtest: whatever.testplpgsqldie()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -37,7 +37,7 @@ ok 4 - whatever.testplpgsql
     #             SQL function "runtests" statement 1
 not ok 5 - whatever.testplpgsqldie
 # Failed test 5: "whatever.testplpgsqldie"
-    # Subtest: whatever.testthis()
+# Subtest: whatever.testthis()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -47,7 +47,7 @@ not ok 5 - whatever.testplpgsqldie
     ok 7 - teardown more
     1..7
 ok 6 - whatever.testthis
-    # Subtest: whatever.testy()
+# Subtest: whatever.testy()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -59,7 +59,7 @@ ok 6 - whatever.testthis
     # Looks like you failed 1 test of 6
 not ok 7 - whatever.testy
 # Failed test 7: "whatever.testy"
-    # Subtest: whatever.testz()
+# Subtest: whatever.testz()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -74,7 +74,7 @@ ok 10 - shutting down more
 # Looks like you failed 2 tests of 10
 ok 1 - starting up
 ok 2 - starting up some more
-    # Subtest: whatever."test ident"()
+# Subtest: whatever."test ident"()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -84,7 +84,7 @@ ok 2 - starting up some more
     ok 7 - teardown more
     1..7
 ok 3 - whatever."test ident"
-    # Subtest: whatever.testplpgsql()
+# Subtest: whatever.testplpgsql()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -95,7 +95,7 @@ ok 3 - whatever."test ident"
     ok 8 - teardown more
     1..8
 ok 4 - whatever.testplpgsql
-    # Subtest: whatever.testplpgsqldie()
+# Subtest: whatever.testplpgsqldie()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -109,7 +109,7 @@ ok 4 - whatever.testplpgsql
     #             SQL function "runtests" statement 1
 not ok 5 - whatever.testplpgsqldie
 # Failed test 5: "whatever.testplpgsqldie"
-    # Subtest: whatever.testthis()
+# Subtest: whatever.testthis()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -119,7 +119,7 @@ not ok 5 - whatever.testplpgsqldie
     ok 7 - teardown more
     1..7
 ok 6 - whatever.testthis
-    # Subtest: whatever.testy()
+# Subtest: whatever.testy()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
@@ -131,7 +131,7 @@ ok 6 - whatever.testthis
     # Looks like you failed 1 test of 6
 not ok 7 - whatever.testy
 # Failed test 7: "whatever.testy"
-    # Subtest: whatever.testz()
+# Subtest: whatever.testz()
     ok 1 - setup
     ok 2 - Should be nothing in the test table
     ok 3 - setup more
