@@ -43,7 +43,7 @@ jobs:
       - run: 'if [ -d "$UPDATE_FROM" ]; then make uninstall clean updatecheck; fi'
 
       # Test upgrade.
-      - run: ./test/test_MVU.sh -s 5432 5433 "{{ matrix.version }}" "{{ matrix.upgrade_to }}"
+      # - run: ./test/test_MVU.sh -s 5432 5433 "{{ matrix.version }}" "{{ matrix.upgrade_to }}"
 
       # Test all, install, test, test-serial, and test-parallel, both from clean
       # repo and repeated with existing build, with and without PARALLEL_CONN=1.
