@@ -10,8 +10,8 @@ set -E -e -u -o pipefail
 
 BASEDIR=`dirname $0`
 if ! . $BASEDIR/../tools/util.sh; then
-  echo "FATAL: error sourcing $BASEDIR/../tools/util.sh" 1>&2
-  exit 99
+    echo "FATAL: error sourcing $BASEDIR/../tools/util.sh" 1>&2
+    exit 99
 fi
 trap err_report ERR
 
@@ -19,12 +19,11 @@ debug 19 "Arguments: $@"
 
 rc=0
 
-
 byte_len() (
-[ $# -eq 1 ] || die 99 "Expected 1 argument, not $# ($@)"
-LANG=C LC_ALL=C
-debug 99 "byte_len($@) = ${#1}"
-echo ${#1}
+    [ $# -eq 1 ] || die 99 "Expected 1 argument, not $# ($@)"
+    LANG=C LC_ALL=C
+    debug 99 "byte_len($@) = ${#1}"
+    echo ${#1}
 )
 
 check_bin() {
@@ -36,22 +35,22 @@ check_bin() {
 # mktemp on OS X results is a super-long path name that can cause problems, ie:
 #   connection to database failed: Unix-domain socket path "/private/var/folders/rp/mv0457r17cg0xqyw5j7701892tlc0h/T/test_pgtap_upgrade.upgrade.7W4BLF/.s.PGSQL.50432" is too long (maximum 103 bytes)
 #
-# This function looks for that condition and replaces the output with something more sane
+# This function looks for that condition and replaces the output with something more legible
 short_tmpdir() (
-[ $# -eq 1 ] || die 99 "Expected 1 argument, not $# ($@)"
-[ "$TMPDIR" != "" ] || die 99 '$TMPDIR not set'
-out=$(mktemp -p '' -d $1.XXXXXX)
-if echo "$out" | egrep -q '^(/private)?/var/folders'; then
-    newout=$(echo "$out" | sed -e "s#.*/$TMPDIR#$TMPDIR#")
-    debug 19 "replacing '$out' with '$newout'"
-fi
+    [ $# -eq 1 ] || die 99 "Expected 1 argument, not $# ($@)"
+    [ "$TMPDIR" != "" ] || die 99 '$TMPDIR not set'
+    out=$(mktemp -p '' -d $1.XXXXXX)
+    if echo "$out" | egrep -q '^(/private)?/var/folders'; then
+        newout=$(echo "$out" | sed -e "s#.*/$TMPDIR#$TMPDIR#")
+        debug 19 "replacing '$out' with '$newout'"
+    fi
 
-debug 9 "$0($@) = $out"
-# Postgres blows up if this is too long. Technically the limit is 103 bytes,
-# but need to account for the socket name, plus the fact that OS X might
-# prepend '/private' to what we return. :(
-[ $(byte_len "$out") -lt 75 ] || die 9 "short_tmpdir($@) returning a value >= 75 bytes ('$out')"
-echo "$out"
+    debug 9 "$0($@) = $out"
+    # Postgres blows up if this is too long. Technically the limit is 103 bytes,
+    # but need to account for the socket name, plus the fact that OS X might
+    # prepend '/private' to what we return. :(
+    [ $(byte_len "$out") -lt 75 ] || die 9 "short_tmpdir($@) returning a value >= 75 bytes ('$out')"
+    echo "$out"
 )
 
 banner() {
@@ -63,46 +62,46 @@ banner() {
 }
 
 run_make() (
-cd $(dirname $0)/..
-$sudo make $@
+    cd $(dirname $0)/..
+    $sudo make $@
 )
 
 modify_config() (
-# See below for definition of ctl_separator
-if [ -z "$ctl_separator" ]; then
-    confDir=$PGDATA
-    conf=$confDir/postgresql.conf
-    debug 6 "$0: conf = $conf"
+    # See below for definition of ctl_separator
+    if [ -z "$ctl_separator" ]; then
+        confDir=$PGDATA
+        conf=$confDir/postgresql.conf
+        debug 6 "$0: conf = $conf"
 
-    debug 0 "Modifying NATIVE $conf"
+        debug 0 "Modifying NATIVE $conf"
 
-    echo "port = $PGPORT" >> $conf
-else
-    confDir="/etc/postgresql/$1/$cluster_name"
-    conf="$confDir/postgresql.conf"
-    debug 6 "$0: confDir = $confDir conf=$conf"
-    debug_ls 9 -la $confDir
+        echo "port = $PGPORT" >> $conf
+    else
+        confDir="/etc/postgresql/$1/$cluster_name"
+        conf="$confDir/postgresql.conf"
+        debug 6 "$0: confDir = $confDir conf=$conf"
+        debug_ls 9 -la $confDir
 
-    debug 0 "Modifying DEBIAN $confDir and $PGDATA"
+        debug 0 "Modifying DEBIAN $confDir and $PGDATA"
 
-    debug 2 ln -s $conf $PGDATA/
-    ln -s $conf $PGDATA/
-    # Some versions also have a conf.d ...
-    if [ -e "$confDir/conf.d" ]; then
-        debug 2 ln -s $confDir/conf.d $PGDATA/
-        ln -s $confDir/conf.d $PGDATA/
+        debug 2 ln -s $conf $PGDATA/
+        ln -s $conf $PGDATA/
+        # Some versions also have a conf.d ...
+        if [ -e "$confDir/conf.d" ]; then
+            debug 2 ln -s $confDir/conf.d $PGDATA/
+            ln -s $confDir/conf.d $PGDATA/
+        fi
+        debug_ls 8 -la $PGDATA
+
+        # Shouldn't need to muck with PGPORT...
+
+        # GUC changed somewhere between 9.1 and 9.5, so read config to figure out correct value
+        guc=$(grep unix_socket_director $conf | sed -e 's/^# *//' | cut -d ' ' -f 1)
+        debug 4 "$0: guc = $guc"
+        echo "$guc = '/tmp'" >> $conf
     fi
-    debug_ls 8 -la $PGDATA
 
-    # Shouldn't need to muck with PGPORT...
-
-    # GUC changed somewhere between 9.1 and 9.5, so read config to figure out correct value
-    guc=$(grep unix_socket_director $conf | sed -e 's/^# *//' | cut -d ' ' -f 1)
-    debug 4 "$0: guc = $guc"
-    echo "$guc = '/tmp'" >> $conf
-fi
-
-echo "synchronous_commit = off" >> $conf
+    echo "synchronous_commit = off" >> $conf
 )
 
 #############################
@@ -127,8 +126,8 @@ OLD_PORT=$1
 NEW_PORT=$2
 OLD_VERSION=$3
 NEW_VERSION=$4
-OLD_PATH=$5
-NEW_PATH=$6
+OLD_PATH="${5:-/usr/lib/postgresql/$OLD_VERSION/bin}"
+NEW_PATH="${5:-/usr/lib/postgresql/$NEW_VERSION/bin}"
 
 export PGDATABASE=test_pgtap_upgrade
 
@@ -226,8 +225,6 @@ psql -c 'CREATE EXTENSION pgtap' # Also uses PGPORT
 echo "Stopping OLD postgres via $old_pg_ctl"
 $old_pg_ctl stop $ctl_separator -w # older versions don't support --wait
 
-
-
 ##################################################################################################
 banner "Running pg_upgrade"
 export PGDATA=$new_dir
@@ -257,8 +254,6 @@ modify_config $NEW_VERSION
         die $rc "pg_upgrade returned $rc"
     fi
 )
-
-
 
 ##################################################################################################
 banner "Testing UPGRADED cluster"
@@ -330,4 +325,3 @@ if [ -n "$EXCLUDE_TEST_FILES" ]; then
 
     run_make test
 fi
-

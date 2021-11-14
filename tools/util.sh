@@ -1,4 +1,4 @@
-# Adapted from https://github.com/decibel/db_tools/blob/master/lib/util.sh
+w# Adapted from https://github.com/decibel/db_tools/blob/master/lib/util.sh
 
 ME=`basename $0`
 

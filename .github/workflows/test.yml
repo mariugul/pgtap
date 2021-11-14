@@ -1,4 +1,4 @@
-name: 🐘 Test
+name: ✅ Test
 on:
   push:
   pull_request:
@@ -21,8 +21,8 @@ jobs:
           - { version: 9.2, upgrade_to: 9.3, update_from: "" }     # updatecheck is not supported prior to 9.3
           - { version: 9.1, upgrade_to: 9.2, update_from: "" }
           # Also test pg_upgrade across many versions
-          # - { version: 9.1,  upgrade_to: 14, update_from: 0.99.0 }
-          # - { version: 9.4,  upgrade_to: 14, update_from: 0.99.0 }
+          - { version: 9.1,  upgrade_to: 14, update_from: "" }
+          - { version: 9.4,  upgrade_to: 14, update_from: "" }
     name: 🐘 PostgreSQL ${{ matrix.version }}
     runs-on: ubuntu-latest
     container: pgxn/pgxn-tools
@@ -31,6 +31,9 @@ jobs:
       UPDATE_FROM:  "${{ matrix.update_from }}"
     steps:
       - run: pg-start ${{ matrix.version }}
+      - run: pg-start ${{ matrix.upgrade_to }}
+        env: { PGPORT: 5433 }
+        if: ${{ matrix.upgrade_to != '' }}
       - uses: actions/checkout@v2
 
       # Basic regression test.
@@ -40,7 +43,7 @@ jobs:
       - run: 'if [ -d "$UPDATE_FROM" ]; then make uninstall clean updatecheck; fi'
 
       # Test upgrade.
-      # - run: ./test/test_MVU.sh -s 55667 55778 "{{ matrix.version }}" "{{ matrix.upgrade_to }}" "/usr/lib/postgresql/{{ matrix.version }}/bin/" "/usr/lib/postgresql/{{ matrix.upgrade_to }}/bin/"
+      - run: ./test/test_MVU.sh -s 5432 5433 "{{ matrix.version }}" "{{ matrix.upgrade_to }}"
 
       # Test all, install, test, test-serial, and test-parallel, both from clean
       # repo and repeated with existing build, with and without PARALLEL_CONN=1.
