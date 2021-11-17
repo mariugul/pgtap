@@ -8,8 +8,8 @@ uninstall_pgtap.sql
 results
 pgtap.so
 regression.*
-*.html
-*.html1
+# *.html
+# *.html1
 *.sql.orig
 bbin
 

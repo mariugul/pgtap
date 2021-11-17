@@ -1,6 +1,4 @@
-pgTAP 1.1.0
-============
-
+# pgTAP 1.1.0
 [pgTAP](https://pgtap.org) is a unit testing framework for PostgreSQL written
 in PL/pgSQL and PL/SQL. It includes a comprehensive collection of
 [TAP](https://testanything.org)-emitting assertion functions, as well as the
@@ -12,6 +10,7 @@ documentation in `doc/pgtap.mmd` or
 [![PGXN version](https://badge.fury.io/pg/pgtap.svg)](https://badge.fury.io/pg/pgtap)
 [![🐘 Postgres](https://github.com/theory/pgtap/actions/workflows/test.yml/badge.svg)](https://github.com/theory/pgtap/actions/workflows/test.yml)
 
+## Installation
 pgTAP must be installed on a host with PostgreSQL server running; it cannot
 be installed remotely.
 
@@ -71,6 +70,8 @@ Install the PostgreSQL
 which are required to run the tests. If you used a package management system
 such as RPM to install PostgreSQL, install the `-contrib` package.
 
+
+## Run
 Once pgTAP is installed, you can add it to a database by connecting as a super
 user and running:
 
